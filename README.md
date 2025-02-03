@@ -8,3 +8,4 @@ The **30 Days Exercise App** is a feature of our comprehensive Calendar App desi
 - **Exercise Instructions**: Clear descriptions and videos to guide you through each workout.
 - **Progress Tracking**: Log your workouts and monitor your progress over the month.
 - **Calendar Integration**: Seamlessly schedule workouts alongside your daily events and reminders.
+
