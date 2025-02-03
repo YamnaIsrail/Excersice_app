@@ -1,16 +1,10 @@
-# excercise_app
+# 30 Days Exercise App
 
-A new Flutter project.
+The **30 Days Exercise App** is a feature of our comprehensive Calendar App designed to help you integrate fitness into your daily routine. This app provides a structured 30-day workout plan, making it easy to stay active and motivated.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Daily Workouts**: A new exercise every day for 30 days, suitable for all fitness levels.
+- **Exercise Instructions**: Clear descriptions and videos to guide you through each workout.
+- **Progress Tracking**: Log your workouts and monitor your progress over the month.
+- **Calendar Integration**: Seamlessly schedule workouts alongside your daily events and reminders.
