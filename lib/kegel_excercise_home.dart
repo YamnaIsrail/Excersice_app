@@ -11,33 +11,61 @@ class KegelExercisesScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(16.0),
-            decoration: const BoxDecoration(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Color.fromRGBO(250, 152, 211, 1),
+                width: 1,
+              ),
               gradient: LinearGradient(
-                colors: [Colors.pinkAccent, Colors.white],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+                begin: Alignment(1, 0),
+                end: Alignment(0, 1),
+                colors: [
+                  Color.fromRGBO(241, 65, 170, 0.48),
+                  Color.fromRGBO(235, 29, 152, 0.11)
+                ],
               ),
             ),
-            child: Column(
-              children:  [
-               Container(
-                 height: 171,
-                 width: 393,
-                 child: Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                     Text('Kegel Exercises', style: TextStyle(fontSize: 30),),
-                     Icon(Icons.local_florist, size: 80, color: Colors.pink)
-                   ],
-                 ),
-               ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: ListTile(
+            width: double.maxFinite,
+
+
+            child:  Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+
+              height: 171,
+              width: 393,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text('Kegel Exercises', style: TextStyle(
+                    fontFamily: 'Roboto', // Default Material font
+                    fontWeight: FontWeight.w600, // Similar to Semi-Bold
+                    fontSize: 20, ),),
+                  Image.asset("assets/kegel/flower.png",
+                      height: 80,
+                      width: 80,
+                      color: Colors.pink)
+                ],
+              ),
+            ),
+
+          ),
+          Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                width: double.maxFinite,
+                padding: EdgeInsets.all(2.5),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xffAED2F6), Color(0xffEBA5CF)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: ListTile(
                     title:  Text(
                       'Exercise Tips',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                     leading: Icon(Icons.lightbulb, color: Colors.yellow, size: 19,),
                     trailing: IconButton(
@@ -46,10 +74,8 @@ class KegelExercisesScreen extends StatelessWidget {
                       },
                       icon: Icon(Icons.keyboard_double_arrow_right, size:19, color: Colors.blueAccent,),
                     )
-                  )
                 ),
-              ],
-            ),
+              )
           ),
           Expanded(
             child: ListView.builder(

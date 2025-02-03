@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'kegel_screen5.dart';
+import 'textStyles.dart';
+
 class HowToDoKegelScreen extends StatelessWidget {
   const HowToDoKegelScreen({super.key});
 
@@ -6,7 +10,6 @@ class HowToDoKegelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("How to do Kegel?"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -15,17 +18,39 @@ class HowToDoKegelScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Kegel requires a rhythmic contraction of pelvic floor muscles to strengthen them.'),
+            Text(
+              "How to do Kegel?",
+              style: headingStyle,
+            ),
+
+            const Text(
+                'Kegel requires a rhythmic contraction of pelvic floor muscles to strengthen them.'),
             const SizedBox(height: 20),
             Center(
-              child: Image.asset('assets/pc_muscles.png', height: 150),
+              child: Image.asset('assets/kegel/pc_muscles.png', height: 150),
             ),
+
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
-              child: const Text('How to find the pelvic floor muscles?'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HowToDoKegel1()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xffe5ebff),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                minimumSize: const Size(
+                    double.infinity, 50), // Full width with minimum height
+              ),
+              child: const Text('How to find the pelvic\n floor muscles?'),
             ),
           ],
         ),
