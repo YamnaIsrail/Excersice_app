@@ -1,5 +1,6 @@
 import 'package:excercise_app/kegel_questionaire_flow/kegel_screen9.dart';
 import 'package:flutter/material.dart';
+import '../kegel_excercise_home.dart';
 
 import 'textStyles.dart';
 class CanIDoKegel extends StatelessWidget {
@@ -9,6 +10,12 @@ class CanIDoKegel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [IconButton(onPressed: () =>   Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const KegelExercisesScreen()),
+        ), icon: const Icon(Icons.close))],
+
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),

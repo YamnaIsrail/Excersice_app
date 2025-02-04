@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../kegel_excercise_home.dart';
 import 'textStyles.dart';
+import '../kegel_excercise_home.dart';
+
 class KegelNote extends StatelessWidget {
   const KegelNote({super.key});
 
@@ -9,6 +11,12 @@ class KegelNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [IconButton(onPressed: () =>   Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const KegelExercisesScreen()),
+        ), icon: const Icon(Icons.close))],
+
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),

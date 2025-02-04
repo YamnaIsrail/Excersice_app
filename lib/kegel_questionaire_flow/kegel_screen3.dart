@@ -1,3 +1,4 @@
+import 'package:excercise_app/kegel_excercise_home.dart';
 import 'package:flutter/material.dart';
 
 import 'textStyles.dart';
@@ -47,10 +48,8 @@ class BenefitsScreen extends StatelessWidget {
                 ),
 
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const KegelNote()),
-                  // );
+                  Navigator.pop(context);
+
                 },
                 child: const Text('Got it',
                   style: TextStyle(

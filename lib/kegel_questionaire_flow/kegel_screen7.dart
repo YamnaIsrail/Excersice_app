@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../kegel_excercise_home.dart';
 
 import 'kegel_screen8.dart';
 import 'textStyles.dart';
@@ -9,6 +10,12 @@ class HowToDoKegel3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [IconButton(onPressed: () =>   Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const KegelExercisesScreen()),
+        ), icon: const Icon(Icons.close))],
+
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),

@@ -1,3 +1,4 @@
+import 'package:excercise_app/kegel_excercise_home.dart';
 import 'package:flutter/material.dart';
 
 import 'kegel_screen5.dart';
@@ -10,8 +11,15 @@ class HowToDoKegelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [IconButton(onPressed: () =>   Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const KegelExercisesScreen()),
+        ), icon: const Icon(Icons.close))],
+
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+
           onPressed: () => Navigator.pop(context),
         ),
       ),
