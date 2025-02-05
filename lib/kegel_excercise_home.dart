@@ -1,6 +1,7 @@
+import 'package:excercise_app/kegel_excercises_pro/kegelDaysUnlocked_hive.dart';
 import 'package:excercise_app/kegel_questionaire_flow/kegel_screen1.dart';
 import 'package:flutter/material.dart';
-
+import 'kegel_excercises_pro/day_intro.dart';
 
 class KegelExercisesScreen extends StatelessWidget {
   const KegelExercisesScreen({super.key});
@@ -31,8 +32,7 @@ class KegelExercisesScreen extends StatelessWidget {
 
             child:  Container(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-
-              height: 171,
+              height: 152,
               width: 393,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -41,47 +41,55 @@ class KegelExercisesScreen extends StatelessWidget {
                     fontFamily: 'Roboto', // Default Material font
                     fontWeight: FontWeight.w600, // Similar to Semi-Bold
                     fontSize: 20, ),),
-                  Image.asset("assets/kegel/flower.png",
-                      height: 80,
-                      width: 80,
-                      color: Colors.pink)
+                  Padding(
+                    padding: EdgeInsets.only(top: 20),
+                    child: Image.asset("assets/kegel/flower2.png",
+                        fit: BoxFit.cover,
+                    ),
+                  )
                 ],
               ),
             ),
 
           ),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                width: double.maxFinite,
-                padding: EdgeInsets.all(2.5),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xffAED2F6), Color(0xffEBA5CF)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: ListTile(
-                    title:  Text(
-                      'Exercise Tips',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          GestureDetector(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> IntroScreen()));
+
+            },
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  width: double.maxFinite,
+                  padding: EdgeInsets.all(2.5),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xffAED2F6), Color(0xffEBA5CF)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    leading: Icon(Icons.lightbulb, color: Colors.yellow, size: 19,),
-                    trailing: IconButton(
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> IntroScreen()));
-                      },
-                      icon: Icon(Icons.keyboard_double_arrow_right, size:19, color: Colors.blueAccent,),
-                    )
-                ),
-              )
+                  ),
+                  child: ListTile(
+                      title:  Text(
+                        'Exercise Tips',
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                      ),
+                      leading: Icon(Icons.lightbulb, color: Colors.yellow, size: 19,),
+                      trailing: IconButton(
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> IntroScreen()));
+                        },
+                        icon: Icon(Icons.keyboard_double_arrow_right, size:19, color: Colors.blueAccent,),
+                      )
+                  ),
+                )
+            ),
           ),
           Expanded(
             child: ListView.builder(
               itemCount: 30,
               itemBuilder: (context, index) {
-                return ExerciseDayTile(day: index + 1);
+                return ExerciseDayTile(day: index + 1, duration:  index + 2,);
               },
             ),
           ),
@@ -91,49 +99,65 @@ class KegelExercisesScreen extends StatelessWidget {
   }
 }
 
+// class ExerciseDayTile extends StatelessWidget {
+//   final int day;
+//   final int duration;
+//   const ExerciseDayTile({super.key, required this.day, required this.duration});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     bool isUnlocked = day == 1; // Unlock only Day 1 for now
+//
+//     return Card(
+//       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+//       child: ListTile(
+//         title: Text('Day $day'),
+//         subtitle: Text('$duration min'),
+//         trailing: isUnlocked
+//             ? ElevatedButton(
+//           onPressed: () {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(
+//                   builder: (context) => ExcerciseDayScreen(duration: duration,day: day,),
+//             ));
+//           },
+//           child: const Text('Start'),
+//         )
+//             : const Icon(Icons.lock),
+//       ),
+//     );
+//   }
+// }
+//
 class ExerciseDayTile extends StatelessWidget {
   final int day;
-  const ExerciseDayTile({super.key, required this.day});
+  final int duration;
+  const ExerciseDayTile({super.key, required this.day, required this.duration});
 
   @override
   Widget build(BuildContext context) {
-    bool isUnlocked = day == 1; // Unlock only Day 1 for now
+    int unlockedDay = KegelStorage.unlockedDay; // Get unlocked day from Hive
+    bool isUnlocked = day <= unlockedDay; // Unlock days <= current unlocked day
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListTile(
         title: Text('Day $day'),
-        subtitle: const Text('3 min'),
+        subtitle: Text('$duration min'),
         trailing: isUnlocked
             ? ElevatedButton(
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => DayScreen(day: day)),
+                builder: (context) => ExcerciseDayScreen(duration: duration, day: day),
+              ),
             );
           },
           child: const Text('Start'),
         )
             : const Icon(Icons.lock),
-      ),
-    );
-  }
-}
-
-class DayScreen extends StatelessWidget {
-  final int day;
-  const DayScreen({super.key, required this.day});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Day $day Exercise')),
-      body: Center(
-        child: Text(
-          'Exercise for Day $day',
-          style: const TextStyle(fontSize: 24),
-        ),
       ),
     );
   }
