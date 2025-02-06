@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'excercise_page.dart';
+import 'states/relax.dart';
 class ExcerciseDayScreen extends StatelessWidget {
   final int day;
   final int duration; // Dynamic duration (in minutes)
@@ -30,14 +31,33 @@ class ExcerciseDayScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white70, fontSize: 14),
             ),
             SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ExerciseScreen(day: day,)),
-                );
-              },
-              child: Text("Start"),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              width: MediaQuery.of(context).size.width *
+                  0.7, //
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  minimumSize:  Size(
+                     double.infinity, 50), // Full width with minimum height
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BreathingApp(totalDurationMinutes: duration, day: day,))
+
+                  );
+                },
+                child: Center(
+                  child: ListTile(
+                                        title: Text("Start", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                    leading: Icon(Icons.play_arrow_sharp, color: Colors.black,),
+                  ),
+                ),
+              ),
             )
           ],
         ),

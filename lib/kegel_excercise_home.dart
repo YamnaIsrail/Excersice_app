@@ -28,34 +28,36 @@ class KegelExercisesScreen extends StatelessWidget {
               ),
             ),
             width: double.maxFinite,
-
-
-            child:  Container(
+            child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               height: 152,
               width: 393,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text('Kegel Exercises', style: TextStyle(
-                    fontFamily: 'Roboto', // Default Material font
-                    fontWeight: FontWeight.w600, // Similar to Semi-Bold
-                    fontSize: 20, ),),
+                  Text(
+                    'Kegel Exercises',
+                    style: TextStyle(
+                      fontFamily: 'Roboto', // Default Material font
+                      fontWeight: FontWeight.w600, // Similar to Semi-Bold
+                      fontSize: 20,
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.only(top: 20),
-                    child: Image.asset("assets/kegel/flower2.png",
-                        fit: BoxFit.cover,
+                    child: Image.asset(
+                      "assets/kegel/flower2.png",
+                      fit: BoxFit.cover,
                     ),
                   )
                 ],
               ),
             ),
-
           ),
           GestureDetector(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> IntroScreen()));
-
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => IntroScreen()));
             },
             child: Align(
                 alignment: Alignment.centerLeft,
@@ -70,26 +72,39 @@ class KegelExercisesScreen extends StatelessWidget {
                     ),
                   ),
                   child: ListTile(
-                      title:  Text(
+                      title: Text(
                         'Exercise Tips',
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.bold),
                       ),
-                      leading: Icon(Icons.lightbulb, color: Colors.yellow, size: 19,),
+                      leading: Icon(
+                        Icons.lightbulb,
+                        color: Colors.yellow,
+                        size: 19,
+                      ),
                       trailing: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> IntroScreen()));
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => IntroScreen()));
                         },
-                        icon: Icon(Icons.keyboard_double_arrow_right, size:19, color: Colors.blueAccent,),
-                      )
-                  ),
-                )
-            ),
+                        icon: Icon(
+                          Icons.keyboard_double_arrow_right,
+                          size: 19,
+                          color: Colors.blueAccent,
+                        ),
+                      )),
+                )),
           ),
           Expanded(
             child: ListView.builder(
               itemCount: 30,
               itemBuilder: (context, index) {
-                return ExerciseDayTile(day: index + 1, duration:  index + 2,);
+                return ExerciseDayTile(
+                    day: index + 1,
+                    duration: (4 + (index ~/ 5) * 2) // Increases every 5 days
+                    );
               },
             ),
           ),
@@ -99,37 +114,6 @@ class KegelExercisesScreen extends StatelessWidget {
   }
 }
 
-// class ExerciseDayTile extends StatelessWidget {
-//   final int day;
-//   final int duration;
-//   const ExerciseDayTile({super.key, required this.day, required this.duration});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     bool isUnlocked = day == 1; // Unlock only Day 1 for now
-//
-//     return Card(
-//       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-//       child: ListTile(
-//         title: Text('Day $day'),
-//         subtitle: Text('$duration min'),
-//         trailing: isUnlocked
-//             ? ElevatedButton(
-//           onPressed: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                   builder: (context) => ExcerciseDayScreen(duration: duration,day: day,),
-//             ));
-//           },
-//           child: const Text('Start'),
-//         )
-//             : const Icon(Icons.lock),
-//       ),
-//     );
-//   }
-// }
-//
 class ExerciseDayTile extends StatelessWidget {
   final int day;
   final int duration;
@@ -139,26 +123,106 @@ class ExerciseDayTile extends StatelessWidget {
   Widget build(BuildContext context) {
     int unlockedDay = KegelStorage.unlockedDay; // Get unlocked day from Hive
     bool isUnlocked = day <= unlockedDay; // Unlock days <= current unlocked day
+    bool isLatestUnlockedDay = day == unlockedDay;
 
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: ListTile(
-        title: Text('Day $day'),
-        subtitle: Text('$duration min'),
-        trailing: isUnlocked
-            ? ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ExcerciseDayScreen(duration: duration, day: day),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Progress line
+        Column(
+          children: [
+            // Circle indicator for each day
+            Container(
+              height: 20,
+              width: 20,
+              child: Icon(
+                Icons.circle,
+                color: Colors.white,
+                size: 14,
               ),
-            );
-          },
-          child: const Text('Start'),
-        )
-            : const Icon(Icons.lock),
-      ),
+              margin: EdgeInsets.only(left: 5),
+              decoration: BoxDecoration(
+                color: isUnlocked ? Colors.pink : Colors.grey,
+                shape: BoxShape.circle,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 5),
+              height:
+                  isLatestUnlockedDay ? 110 : 60, // Line height between days
+              width: 2,
+              color: isUnlocked
+                  ? Colors.pink
+                  : Colors.grey, // Yellow for unlocked days
+            ),
+          ],
+        ),
+        SizedBox(width: 5),
+
+        // The exercise details
+        Expanded(
+          child: Card(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text('Day $day'),
+                  subtitle: Text('$duration min'),
+                  trailing: isUnlocked
+                      ? IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ExcerciseDayScreen(
+                                    duration: duration, day: day),
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.arrow_forward_ios),
+                        )
+                      : const Icon(Icons.lock),
+                ),
+                if (isLatestUnlockedDay)
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    width: MediaQuery.of(context).size.width *
+                        0.5, // 70% of the screen width
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ExcerciseDayScreen(
+                                  duration: duration, day: day),
+                            ));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFEB1D98),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        minimumSize: const Size(double.infinity,
+                            50), // Full width with minimum height
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          'Start',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600, // Similar to Semi-Bold
+                            fontSize: 18,
+                          ),
+                        ),
+                        leading: Icon(Icons.play_arrow_sharp, color: Colors.white, size: 18,),
+                      ),
+                    ),
+                  )
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

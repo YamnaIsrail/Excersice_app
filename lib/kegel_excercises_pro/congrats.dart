@@ -33,6 +33,8 @@ class _CongratsScreenState extends State<CongratsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int unlockedDay= KegelStorage.unlockedDay;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -69,7 +71,8 @@ class _CongratsScreenState extends State<CongratsScreen> {
                     ElevatedButton(
                       onPressed: () {
                         int currentDay = widget.day;
-                      KegelStorage.setUnlockedDay(currentDay + 1); // Unlock the next day
+                        if(unlockedDay== currentDay)
+                          KegelStorage.setUnlockedDay(unlockedDay + 1); // Unlock the next day
 
                       Navigator.pushReplacement(
                         context,

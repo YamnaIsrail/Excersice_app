@@ -4,22 +4,24 @@ import 'dart:math';
 import 'package:flutter/animation.dart';
 
 import 'wait.dart';  // <-- Add this line for AnimationController
-
-
 class RestScreen extends StatefulWidget {
   final int day;
-  const RestScreen({Key? key, required this.day}) : super(key: key);
+  final int restDuration; // Dynamic rest duration
+  const RestScreen({Key? key, required this.day, required this.restDuration}) : super(key: key);
 
   @override
   _RestScreenState createState() => _RestScreenState();
 }
+
 class _RestScreenState extends State<RestScreen> {
   int restCountdown = 5;
-  int initialRestTime  = 5;
+  int initialRestTime = 5;
 
   @override
   void initState() {
     super.initState();
+    restCountdown = widget.restDuration; // Set the rest duration dynamically
+    initialRestTime = widget.restDuration;
     startRestTimer();
   }
 
@@ -39,45 +41,31 @@ class _RestScreenState extends State<RestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.deepPurple.shade900,
       body: Container(
-        decoration: BoxDecoration(
-         color: Color(0xff2B0B4D)
-        ),
+        decoration: BoxDecoration(color: Color(0xff2B0B4D)),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "TAKE A REST",
-                style: TextStyle(fontSize: 48,fontWeight: FontWeight.w600, color: Colors.white),
-              ),
+              Text("TAKE A REST", style: TextStyle(fontSize: 48, fontWeight: FontWeight.w600, color: Colors.white)),
               SizedBox(height: 20),
               CustomPaint(
-                size: Size(220.0, 220.0), // Set size of circle
+                size: Size(220.0, 220.0),
                 painter: CircleProgressPainter(
                     progress: (initialRestTime - restCountdown) / initialRestTime),
                 child: Container(
-                  width: 2 * 110.0, // Double the radius to make it cover the full circle
-                  height: 2 * 110.0, // Same height as width
-                  // decoration: BoxDecoration(
-                  //   shape: BoxShape.circle,
-                  //   border: Border.all(
-                  //     color: Color(0xffB5B5B5), // Set the border color
-                  //     width: 8.0, // Set the border width to make it bold
-                  //   ),
-                  // ),
+                  width: 2 * 110.0,
+                  height: 2 * 110.0,
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundColor: Colors.transparent, // Make the background transparent
-                    child: Text(
-                      "$restCountdown",
-                      style: TextStyle(fontSize: 80, fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
+                    backgroundColor: Colors.transparent,
+                    child: Text("$restCountdown", style: TextStyle(fontSize: 80, fontWeight: FontWeight.bold, color: Colors.white)),
                   ),
                 ),
               ),
               SizedBox(height: 20),
+
+
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff6F50E5),
