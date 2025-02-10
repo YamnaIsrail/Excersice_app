@@ -101,10 +101,8 @@ class KegelExercisesScreen extends StatelessWidget {
             child: ListView.builder(
               itemCount: 30,
               itemBuilder: (context, index) {
-                return ExerciseDayTile(
-                    day: index + 1,
-                    duration: (4 + (index ~/ 5) * 2) // Increases every 5 days
-                    );
+                return ExerciseDayTile(day: index + 1);
+
               },
             ),
           ),
@@ -114,17 +112,47 @@ class KegelExercisesScreen extends StatelessWidget {
   }
 }
 
+
+int calculateDuration(int day) {
+  if (day <= 7) return 3;
+  if (day <= 12) return 4;
+  if (day <= 16) return 5;
+  if (day <= 22) return 6;
+  return 7;
+}
+
+int calculateTotalCount(int day) {
+  int totalCount = 40; // Start at 40
+  List<int> increments = [
+    2, 1, 2, 3, 2, 2, // Increments for days 2-7
+    2, 2, 0, 4, -2,   // Increments for days 8-12
+    4, 2, 2, 0,       // Increments for days 13-16
+    3, 1, -1, 3, 1, -1, // Increments for days 17-22
+    3, 0, 3, 0, 2, 2  // Increments for days 23-28
+  ];
+
+  for (int i = 2; i <= day; i++) {
+    totalCount += increments[i - 2]; // Adjust based on the pattern
+  }
+
+  return totalCount;
+}
+
 class ExerciseDayTile extends StatelessWidget {
   final int day;
   final int duration;
-  const ExerciseDayTile({super.key, required this.day, required this.duration});
+  final int totalCount;
+
+  ExerciseDayTile({required this.day})
+      : duration = calculateDuration(day),
+        totalCount = calculateTotalCount(day);
 
   @override
   Widget build(BuildContext context) {
     int unlockedDay = KegelStorage.unlockedDay; // Get unlocked day from Hive
     bool isUnlocked = day <= unlockedDay; // Unlock days <= current unlocked day
     bool isLatestUnlockedDay = day == unlockedDay;
-
+// print("$day $totalCount");
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -175,7 +203,10 @@ class ExerciseDayTile extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ExcerciseDayScreen(
-                                    duration: duration, day: day),
+                                    duration: duration,
+                                    totalcount: totalCount,
+                                    day: day,
+                                ),
                               ),
                             );
                           },
@@ -194,7 +225,9 @@ class ExerciseDayTile extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ExcerciseDayScreen(
-                                  duration: duration, day: day),
+                                totalcount: totalCount,
+                                  duration: duration,
+                                  day: day),
                             ));
                       },
                       style: ElevatedButton.styleFrom(

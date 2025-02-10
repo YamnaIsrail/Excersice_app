@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'excercise_page.dart';
-import 'states/relax.dart';
+
 class ExcerciseDayScreen extends StatelessWidget {
   final int day;
   final int duration; // Dynamic duration (in minutes)
+  final int totalcount;
 
-  const ExcerciseDayScreen({super.key, required this.day, required this.duration});
+  const ExcerciseDayScreen({super.key, required this.day,required this.totalcount, required this.duration});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,10 @@ class ExcerciseDayScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => BreathingApp(totalDurationMinutes: duration, day: day,))
+                    MaterialPageRoute(builder: (context) => BreathingApp(
+                      totalCount: totalcount,
+                      totalDurationMinutes: duration,
+                      day: day,))
 
                   );
                 },
