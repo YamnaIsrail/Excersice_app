@@ -24,13 +24,14 @@ class IntroScreen extends StatelessWidget {
                 Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        color: Color(0xffe5ebff),
-                        borderRadius:BorderRadius.horizontal(
-                          left: Radius.circular(15),
-                          right: Radius.circular(15),
-                        ),
+                      color: Color(0xffe5ebff),
+                      borderRadius: BorderRadius.horizontal(
+                        left: Radius.circular(15),
+                        right: Radius.circular(15),
+                      ),
                     ),
-                    child: const Text('Hi',
+                    child: const Text(
+                      'Hi',
                       style: TextStyle(
                         fontWeight: FontWeight.normal, // Similar to Semi-Bold
                         fontSize: 18,
@@ -38,19 +39,18 @@ class IntroScreen extends StatelessWidget {
                     )),
                 const SizedBox(height: 10),
                 Container(
-                  decoration: BoxDecoration(
-                      color: Color(0xffe5ebff),
-                      borderRadius: BorderRadius.circular(15)
-                  ),
+                    decoration: BoxDecoration(
+                        color: Color(0xffe5ebff),
+                        borderRadius: BorderRadius.circular(15)),
                     width: MediaQuery.of(context).size.width * 0.7,
                     padding: EdgeInsets.all(3),
                     child: const Text(
-                        'May I share some knowledge '
-                            'about Kegel with you?',
+                      'May I share some knowledge '
+                      'about Kegel with you?',
                       style: TextStyle(
                         fontWeight: FontWeight.normal, // Similar to Semi-Bold
                         fontSize: 18,
-                          ),
+                      ),
                     )),
               ],
             ),
@@ -74,29 +74,31 @@ class IntroScreen extends StatelessWidget {
                     minimumSize: const Size(
                         double.infinity, 50), // Full width with minimum height
                   ),
-                  child: const Text('Yes',
+                  child: const Text(
+                    'Yes',
                     style: TextStyle(
                       color: Colors.white,
-                        fontWeight: FontWeight.w600, // Similar to Semi-Bold
-                        fontSize: 18,
-                       ),
+                      fontWeight: FontWeight.w600, // Similar to Semi-Bold
+                      fontSize: 18,
+                    ),
                   ),
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const KegelExercisesScreen()),
-                    );
-
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const KegelExercisesScreen()),
+                    // );
+                    Navigator.pop(context);
                   },
-                  child: const Text('Not now',
+                  child: const Text(
+                    'Not now',
                     style: TextStyle(
-                      fontWeight: FontWeight.w600, // Similar to Semi-Bold
-                      fontSize: 16,
-                      color: Color(0xff6356F2)
-                  ),),
+                        fontWeight: FontWeight.w600, // Similar to Semi-Bold
+                        fontSize: 16,
+                        color: Color(0xff6356F2)),
+                  ),
                 ),
               ],
             ),

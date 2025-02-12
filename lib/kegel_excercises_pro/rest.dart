@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'progress_circle.dart';
+
 class RestScreen extends StatefulWidget {
   final VoidCallback onContinue;
   final bool isAudio;
@@ -14,6 +14,7 @@ class RestScreen extends StatefulWidget {
 
 class _RestScreenState extends State<RestScreen> {
   int _counter = 5;
+  int initialRestTime = 5;
   Timer? _timer;
   bool _isPaused = false;
 
@@ -39,23 +40,40 @@ class _RestScreenState extends State<RestScreen> {
     });
   }
 
-  void _togglePlayPause() {
-    setState(() {
-      _isPaused = !_isPaused;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    int totalRestTime = initialRestTime; // Total rest time
+    int timeSpentInRest = (totalRestTime - _counter).toInt(); // Time spent in rest
+    double progress = timeSpentInRest / totalRestTime; // Calculate progress
+
     return Scaffold(
-      backgroundColor: Color(0xff2B0B4D),
-      body: Center(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.06, 1.0],
+            colors: [Color(0xff2B0B4D), Color(0xff141575)],
+          ),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "TAKE A REST",
-              style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Colors.white),
+            Padding(
+              padding: EdgeInsets.only(top: 60.0),
+              child: AnimatedOpacity(
+                opacity:  1.0,
+                duration: Duration(milliseconds: 300),
+                child: Text(
+                  "Take a Rest",
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
             SizedBox(height: 20),
             Stack(
@@ -63,7 +81,7 @@ class _RestScreenState extends State<RestScreen> {
               children: [
                 CustomPaint(
                   size: Size(220.0, 220.0),
-                  painter: CircleProgressPainter(progress: (5 - _counter) / 5),
+                  painter: CircleProgressPainter(progress: progress),
                 ),
                 Container(
                   width: 2 * 110.0,
@@ -87,6 +105,7 @@ class _RestScreenState extends State<RestScreen> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
+                        initialRestTime += 20;
                         _counter += 20;
                       });
                     },
@@ -94,18 +113,19 @@ class _RestScreenState extends State<RestScreen> {
                   ),
                 SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: _togglePlayPause,
-                  child: Text(_isPaused ? "RESUME" : "PAUSE"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    widget.onContinue();
+                  },
+                  child: Text("SKIP"),
                 ),
               ],
             ),
-            SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
-
   @override
   void dispose() {
     _timer?.cancel();

@@ -99,7 +99,7 @@ class KegelExercisesScreen extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 30,
+              itemCount: 28,
               itemBuilder: (context, index) {
                 return ExerciseDayTile(day: index + 1);
 
